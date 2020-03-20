@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "5.2.0"        //https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
+    id "edu.sc.seis.launch4j" version "2.4.6"                   //https://plugins.gradle.org/plugin/edu.sc.seis.launch4j
+}
+
+group 'dyskal.discordrp'
+version '1.3'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.formdev:flatlaf:0.27'                   //https://bintray.com/jformdesigner/flatlaf/flatlaf/_latestVersion
+    implementation 'club.minnced:java-discord-rpc:2.0.2'        //https://bintray.com/minndevelopment/maven/java-discord-rpc/_latestVersion
+    implementation 'com.electronwill.night-config:toml:3.6.2'   //https://bintray.com/bintray/jcenter/com.electronwill.night-config%3Atoml/_latestVersion
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'dyskal.DiscordRP'
+        )
+    }
+}
+
+createExe {
+    outfile = "DiscordRP-${project.version}.exe"
+    mainClassName = 'dyskal.DiscordRP'
+    copyConfigurable = project.tasks.shadowJar.outputs.files
+    icon = "${projectDir}/src/main/resources/assets/icon.ico"
+    jar = "lib/${project.tasks.shadowJar.archiveName}"
+}
