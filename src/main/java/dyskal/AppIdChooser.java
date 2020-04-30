@@ -12,12 +12,14 @@ public class AppIdChooser extends JFrame {
         this.setIconImage(new ImageIcon((Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png")))).getImage());
         this.setResizable(false);
 
-        Box appId = Box.createVerticalBox();
+        Box bAppID = Box.createVerticalBox();
         JLabel applicationIdLabel = new JLabel("Enter your application id:");
         JTextField applicationIdText = new JTextField(applicationId);
+        Box bMgmt = Box.createHorizontalBox();
         JButton validationButton = new JButton("Validate");
+        JLabel error = new JLabel();
         validationButton.addActionListener(e ->{
-            if (!applicationIdText.getText().isEmpty()) {
+            if (applicationIdText.getText().matches("^[0-9]+$")) {
                 applicationId = applicationIdText.getText();
                 System.out.println(applicationId);
                 try {
@@ -30,17 +32,23 @@ public class AppIdChooser extends JFrame {
                     SwingUtilities.invokeLater(DiscordRP::new);
                 }
             }
+            else {
+                error.setText("Application Id is invalid");
+            }
         });
-        appId.add(applicationIdLabel);
-        appId.add(applicationIdText);
-        appId.add(validationButton);
+
+        bAppID.add(applicationIdLabel);
+        bAppID.add(applicationIdText);
+        bMgmt.add(validationButton);
+        bMgmt.add(error);
 
         Box body = Box.createVerticalBox();
         Dimension minSize = new Dimension(10, 20);
         Dimension prefSize = new Dimension(0, 10);
         Dimension maxSize = new Dimension(50, 70);
         body.add(new Box.Filler(minSize, prefSize, maxSize));
-        body.add(appId);
+        body.add(bAppID);
+        body.add(bMgmt);
         body.add(new Box.Filler(minSize, prefSize, maxSize));
 
         this.add(body);

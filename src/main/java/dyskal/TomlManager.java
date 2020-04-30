@@ -1,7 +1,6 @@
 package dyskal;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
-
 import javax.swing.*;
 import java.io.File;
 
@@ -15,7 +14,7 @@ public class TomlManager {
         config.load();
         String appId = config.get("appId");
         try {
-            if (appId == null || appId.isEmpty()) {
+            if (appId == null || appId.isEmpty() || !appId.matches("^[0-9]+$")) {
                 SwingUtilities.invokeLater(AppIdChooser::new);
             } else {
                 AppIdChooser.applicationId = appId;
