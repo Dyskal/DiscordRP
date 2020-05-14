@@ -14,7 +14,7 @@ repositories {
 dependencies {
     implementation 'com.formdev:flatlaf:0.34'                   //https://bintray.com/jformdesigner/flatlaf/flatlaf/_latestVersion
     implementation 'club.minnced:java-discord-rpc:2.0.2'        //https://bintray.com/minndevelopment/maven/java-discord-rpc/_latestVersion
-    implementation 'com.electronwill.night-config:toml:3.6.2'   //https://bintray.com/bintray/jcenter/com.electronwill.night-config%3Atoml/_latestVersion
+    implementation 'com.electronwill.night-config:toml:3.6.3'   //https://bintray.com/bintray/jcenter/com.electronwill.night-config%3Atoml/_latestVersion
 }
 
 jar {
