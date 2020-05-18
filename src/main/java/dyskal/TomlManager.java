@@ -6,18 +6,18 @@ import java.io.File;
 
 public class TomlManager {
     static TomlManager tomlManager = new TomlManager();
-    File dir = new File(System.getenv("APPDATA") + "\\Dyskal\\DiscordRP");
-    File file = new File(dir + "\\settings.toml");
-    FileConfig config = FileConfig.of(file);
+    private final File dir = new File(System.getenv("APPDATA") + "\\Dyskal\\DiscordRP");
+    private final File file = new File(dir + "\\settings.toml");
 
     public void isAvailable() {
-        config.load();
-        String appId = config.get("appId");
         try {
+            FileConfig config = FileConfig.of(file);
+            config.load();
+            String appId = config.get("appId");
             if (appId == null || appId.isEmpty() || !appId.matches("^[0-9]+$")) {
                 SwingUtilities.invokeLater(AppIdChooser::new);
             } else {
-                AppIdChooser.applicationId = appId;
+                AppIdChooser.setAppId(appId);
                 SwingUtilities.invokeLater(DiscordRP::new);
             }
         } catch (Exception ex){
@@ -25,14 +25,12 @@ public class TomlManager {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void addAppId() throws Exception {
-        IGNORE_RESULT(dir.mkdirs());
-        IGNORE_RESULT(file.createNewFile());
-        config.set("appId", AppIdChooser.applicationId);
+        dir.mkdirs();
+        file.createNewFile();
+        FileConfig config = FileConfig.of(file);
+        config.set("appId", AppIdChooser.getAppId());
         config.save();
     }
-
-    @SuppressWarnings("unused")
-    private static void IGNORE_RESULT(boolean b){}
-
 }

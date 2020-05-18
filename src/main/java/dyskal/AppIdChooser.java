@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+import static dyskal.TomlManager.tomlManager;
+
 public class AppIdChooser extends JFrame {
-    static String applicationId;
+    private static String applicationId;
     public AppIdChooser() {
         super("DiscordRP");
         this.setPreferredSize(new Dimension(300, 150));
@@ -17,13 +19,13 @@ public class AppIdChooser extends JFrame {
         JTextField applicationIdText = new JTextField(applicationId);
         Box bMgmt = Box.createHorizontalBox();
         JButton validationButton = new JButton("Validate");
-        JLabel error = new JLabel();
+        JLabel errorLabel = new JLabel();
         validationButton.addActionListener(e ->{
             if (applicationIdText.getText().matches("^[0-9]+$")) {
                 applicationId = applicationIdText.getText();
                 System.out.println(applicationId);
                 try {
-                    TomlManager.tomlManager.addAppId();
+                    tomlManager.addAppId();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -33,14 +35,14 @@ public class AppIdChooser extends JFrame {
                 }
             }
             else {
-                error.setText("Application Id is invalid");
+                errorLabel.setText("Application Id is invalid");
             }
         });
 
         bAppID.add(applicationIdLabel);
         bAppID.add(applicationIdText);
         bMgmt.add(validationButton);
-        bMgmt.add(error);
+        bMgmt.add(errorLabel);
 
         Box body = Box.createVerticalBox();
         Dimension minSize = new Dimension(10, 20);
@@ -56,5 +58,13 @@ public class AppIdChooser extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+
+    public static void setAppId(String appId) {
+        applicationId = appId;
+    }
+
+    public static String getAppId() {
+        return applicationId;
     }
 }

@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'dyskal.discordrp'
-version '1.3'
+version '1.4'
 
 repositories {
     jcenter()

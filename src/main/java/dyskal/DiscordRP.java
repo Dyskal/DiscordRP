@@ -9,6 +9,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Objects;
 
+import static dyskal.TomlManager.tomlManager;
+
 public class DiscordRP extends JFrame {
     public DiscordRP() {
         super("Discord RP");
@@ -17,7 +19,7 @@ public class DiscordRP extends JFrame {
 
         DiscordRPC lib = DiscordRPC.INSTANCE;
         DiscordEventHandlers handlers = new DiscordEventHandlers();
-        lib.Discord_Initialize(AppIdChooser.applicationId, handlers, true, null);
+        lib.Discord_Initialize(AppIdChooser.getAppId(), handlers, true, null);
 
         DiscordRichPresence presence = new DiscordRichPresence();
         presence.startTimestamp = System.currentTimeMillis() / 1000;
@@ -145,6 +147,6 @@ public class DiscordRP extends JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        TomlManager.tomlManager.isAvailable();
+        tomlManager.isAvailable();
     }
 }
