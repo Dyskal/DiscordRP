@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.io.File;
 
 public class TomlManager {
-    static TomlManager tomlManager = new TomlManager();
     private final File dir = new File(System.getenv("APPDATA") + "\\Dyskal\\DiscordRP");
     private final File file = new File(dir + "\\settings.toml");
 

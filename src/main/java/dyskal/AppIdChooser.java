@@ -4,10 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-import static dyskal.TomlManager.tomlManager;
-
 public class AppIdChooser extends JFrame {
     private static String applicationId;
+    private static final TomlManager tomlManager = new TomlManager();
     public AppIdChooser() {
         super("DiscordRP");
         this.setPreferredSize(new Dimension(300, 150));

@@ -1,6 +1,8 @@
 package dyskal;
 
-import club.minnced.discord.rpc.*;
+import club.minnced.discord.rpc.DiscordEventHandlers;
+import club.minnced.discord.rpc.DiscordRPC;
+import club.minnced.discord.rpc.DiscordRichPresence;
 import com.formdev.flatlaf.FlatDarculaLaf;
 
 import javax.swing.*;
@@ -9,9 +11,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Objects;
 
-import static dyskal.TomlManager.tomlManager;
-
 public class DiscordRP extends JFrame {
+    private static final TomlManager tomlManager = new TomlManager();
     public DiscordRP() {
         super("Discord RP");
         this.setPreferredSize(new Dimension(600, 300));
