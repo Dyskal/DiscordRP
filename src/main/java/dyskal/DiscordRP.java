@@ -59,7 +59,6 @@ public class DiscordRP {
         });
         menuBar.add(disconnect);
 
-
         Box bDetails = Box.createHorizontalBox();
         JLabel detailsLabel = new JLabel("Details");
         JTextField detailsText = new JTextField(presence.details);
