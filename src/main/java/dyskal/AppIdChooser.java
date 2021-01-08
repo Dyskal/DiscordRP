@@ -10,12 +10,13 @@ public class AppIdChooser extends JFrame {
     public AppIdChooser() {
         super("DiscordRP");
         this.setPreferredSize(new Dimension(300, 150));
-        this.setIconImage(new ImageIcon((Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png")))).getImage());
+        this.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png"))).getImage());
         this.setResizable(false);
 
         Box bAppID = Box.createVerticalBox();
         JLabel applicationIdLabel = new JLabel("Enter your application id:");
         JTextField applicationIdText = new JTextField(applicationId);
+
         Box bMgmt = Box.createHorizontalBox();
         JButton validationButton = new JButton("Validate");
         JLabel errorLabel = new JLabel();

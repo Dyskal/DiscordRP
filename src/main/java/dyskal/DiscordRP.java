@@ -11,12 +11,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Objects;
 
-public class DiscordRP extends JFrame {
+public class DiscordRP {
     private static final TomlManager tomlManager = new TomlManager();
+
     public DiscordRP() {
-        super("Discord RP");
-        this.setPreferredSize(new Dimension(600, 300));
-        this.setIconImage(new ImageIcon((Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png")))).getImage());
+        JFrame frame = new JFrame();
+        frame.setTitle("Discord RP");
+        frame.setPreferredSize(new Dimension(600, 300));
+        frame.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png"))).getImage());
 
         DiscordRPC lib = DiscordRPC.INSTANCE;
         DiscordEventHandlers handlers = new DiscordEventHandlers();
@@ -25,7 +27,7 @@ public class DiscordRP extends JFrame {
         DiscordRichPresence presence = new DiscordRichPresence();
         presence.startTimestamp = System.currentTimeMillis() / 1000;
         presence.details = "";
-        presence.state   = "";
+        presence.state = "";
         presence.largeImageKey = "";
         presence.largeImageText = "";
         presence.smallImageKey = "";
@@ -46,13 +48,13 @@ public class DiscordRP extends JFrame {
         }, "RPC-Callback-Handler");
         t.start();
 
-        Dimension dimension = new Dimension(200,100);
+        Dimension dimension = new Dimension(200, 100);
 
         JMenuBar menuBar = new JMenuBar();
         JButton disconnect = new JButton("Disconnect");
         disconnect.addActionListener(e -> {
             t.interrupt();
-            this.dispose();
+            frame.dispose();
             SwingUtilities.invokeLater(AppIdChooser::new);
         });
         menuBar.add(disconnect);
@@ -102,7 +104,7 @@ public class DiscordRP extends JFrame {
         JButton updatePresence = new JButton("Update Presence");
         updatePresence.addActionListener(e -> {
             presence.details = detailsText.getText();
-            presence.state   = stateText.getText();
+            presence.state = stateText.getText();
             presence.largeImageKey = ((String) Objects.requireNonNull(largeImageKey.getSelectedItem())).toLowerCase();
             presence.largeImageText = largeImageText.getText();
             presence.smallImageKey = ((String) Objects.requireNonNull(smallImageKey.getSelectedItem())).toLowerCase();
@@ -115,7 +117,7 @@ public class DiscordRP extends JFrame {
         Dimension minSize = new Dimension(10, 20);
         Dimension prefSize = new Dimension(20, 20);
         Dimension maxSize = new Dimension(50, 70);
-        body.add(new Box.Filler(minSize, new Dimension(0,10), maxSize));
+        body.add(new Box.Filler(minSize, new Dimension(0, 10), maxSize));
         body.add(bDetails);
         body.add(new Box.Filler(minSize, prefSize, maxSize));
         body.add(bState);
@@ -125,21 +127,21 @@ public class DiscordRP extends JFrame {
         body.add(bSmallImage);
         body.add(new Box.Filler(minSize, prefSize, maxSize));
         body.add(bButtons);
-        body.add(new Box.Filler(minSize, new Dimension(0,10), maxSize));
+        body.add(new Box.Filler(minSize, new Dimension(0, 10), maxSize));
 
-        this.addWindowListener(new WindowAdapter() {
+        frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 t.interrupt();
             }
         });
 
-        this.setJMenuBar(menuBar);
-        this.add(body);
-        this.pack();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        frame.setJMenuBar(menuBar);
+        frame.add(body);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {

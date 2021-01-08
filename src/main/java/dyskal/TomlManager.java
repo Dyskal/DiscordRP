@@ -1,7 +1,8 @@
 package dyskal;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
-import javax.swing.*;
+
+import javax.swing.SwingUtilities;
 import java.io.File;
 
 public class TomlManager {
@@ -19,7 +20,7 @@ public class TomlManager {
                 AppIdChooser.setAppId(appId);
                 SwingUtilities.invokeLater(DiscordRP::new);
             }
-        } catch (Exception ex){
+        } catch (Exception ex) {
             SwingUtilities.invokeLater(AppIdChooser::new);
         }
     }
