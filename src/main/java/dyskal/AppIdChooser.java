@@ -7,11 +7,13 @@ import java.util.Objects;
 public class AppIdChooser extends JFrame {
     private static String applicationId;
     private static final TomlManager tomlManager = new TomlManager();
+
     public AppIdChooser() {
-        super("DiscordRP");
-        this.setPreferredSize(new Dimension(300, 150));
-        this.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png"))).getImage());
-        this.setResizable(false);
+        JFrame frame = new JFrame();
+        frame.setTitle("DiscordRP");
+        frame.setPreferredSize(new Dimension(300, 150));
+        frame.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png"))).getImage());
+        frame.setResizable(false);
 
         Box bAppID = Box.createVerticalBox();
         JLabel applicationIdLabel = new JLabel("Enter your application id:");
@@ -23,14 +25,13 @@ public class AppIdChooser extends JFrame {
         validationButton.addActionListener(e ->{
             if (applicationIdText.getText().matches("^[0-9]+$")) {
                 applicationId = applicationIdText.getText();
-                System.out.println(applicationId);
                 try {
                     tomlManager.addAppId();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 finally {
-                    this.dispose();
+                    frame.dispose();
                     SwingUtilities.invokeLater(DiscordRP::new);
                 }
             }
@@ -53,11 +54,11 @@ public class AppIdChooser extends JFrame {
         body.add(bMgmt);
         body.add(new Box.Filler(minSize, prefSize, maxSize));
 
-        this.add(body);
-        this.pack();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        frame.add(body);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public static void setAppId(String appId) {
