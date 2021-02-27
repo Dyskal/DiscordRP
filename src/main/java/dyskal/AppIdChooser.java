@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class AppIdChooser extends JFrame {
-    private static String applicationId;
+    private String applicationId;
     private final TomlManager tomlManager = new TomlManager();
 
     public AppIdChooser() {
@@ -73,7 +73,7 @@ public class AppIdChooser extends JFrame {
         frame.setVisible(true);
     }
 
-    public static String getAppId() {
+    public String getAppId() {
         return applicationId;
     }
 

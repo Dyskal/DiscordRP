@@ -20,7 +20,7 @@ public class DiscordRP {
 
         DiscordRPC lib = DiscordRPC.INSTANCE;
         DiscordEventHandlers handlers = new DiscordEventHandlers();
-        lib.Discord_Initialize(AppIdChooser.getAppId(), handlers, true, null);
+        lib.Discord_Initialize(new AppIdChooser().getAppId(), handlers, true, null);
 
         DiscordRichPresence presence = new DiscordRichPresence();
         presence.startTimestamp = System.currentTimeMillis() / 1000;
