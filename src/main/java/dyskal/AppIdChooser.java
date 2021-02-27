@@ -1,58 +1,70 @@
 package dyskal;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+
 import javax.swing.*;
+import javax.swing.Box.Filler;
 import java.awt.*;
 import java.util.Objects;
 
 public class AppIdChooser extends JFrame {
     private static String applicationId;
-    private static final TomlManager tomlManager = new TomlManager();
+    private final TomlManager tomlManager = new TomlManager();
 
     public AppIdChooser() {
         JFrame frame = new JFrame();
         frame.setTitle("DiscordRP");
-        frame.setPreferredSize(new Dimension(300, 150));
+        frame.setPreferredSize(new Dimension(250, 137));
         frame.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png"))).getImage());
         frame.setResizable(false);
 
         Box bAppID = Box.createVerticalBox();
-        JLabel applicationIdLabel = new JLabel("Enter your application id:");
-        JTextField applicationIdText = new JTextField(applicationId);
+        JLabel applicationIdLabel = new JLabel("Enter or select your application id:");
+        applicationIdLabel.setAlignmentX(CENTER_ALIGNMENT);
+        JComboBox<String> applicationIdList = new JComboBox<>(tomlManager.getListAppIds().toArray(new String[0]));
+        applicationIdList.setEditable(true);
+        applicationIdList.setMaximumSize(new Dimension(215, 40));
+
 
         Box bMgmt = Box.createHorizontalBox();
-        JButton validationButton = new JButton("Validate");
+        JButton validation = new JButton("Validate");
         JLabel errorLabel = new JLabel();
-        validationButton.addActionListener(e ->{
-            if (applicationIdText.getText().matches("^[0-9]+$")) {
-                applicationId = applicationIdText.getText();
-                try {
-                    tomlManager.addAppId();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+        errorLabel.setAlignmentX(CENTER_ALIGNMENT);
+        validation.addActionListener(e -> {
+            if (applicationIdList.getSelectedItem() != null && ((String) applicationIdList.getSelectedItem()).matches("^[0-9]+$")) {
+                applicationId = (String) applicationIdList.getSelectedItem();
+                if (!tomlManager.getListAppIds().contains(applicationId)) {
+                    tomlManager.addAppId(applicationId);
                 }
-                finally {
-                    frame.dispose();
-                    SwingUtilities.invokeLater(DiscordRP::new);
-                }
-            }
-            else {
+                frame.dispose();
+                SwingUtilities.invokeLater(DiscordRP::new);
+            } else {
                 errorLabel.setText("Application Id is invalid");
             }
         });
 
+        JButton remove = new JButton("Remove");
+        remove.addActionListener(e -> {
+            tomlManager.removeAppId((String) applicationIdList.getSelectedItem());
+            applicationIdList.removeItem(applicationIdList.getSelectedItem());
+        });
+
+        Dimension dim5 = new Dimension(0, 5);
+        Dimension dim7 = new Dimension(0, 7);
+
+        bAppID.add(new Filler(dim5, dim5, dim5));
         bAppID.add(applicationIdLabel);
-        bAppID.add(applicationIdText);
-        bMgmt.add(validationButton);
-        bMgmt.add(errorLabel);
+        bAppID.add(new Filler(dim5, dim5, dim5));
+        bAppID.add(applicationIdList);
+        bAppID.add(new Filler(dim5, dim5, dim5));
+        bMgmt.add(validation);
+        bMgmt.add(remove);
 
         Box body = Box.createVerticalBox();
-        Dimension minSize = new Dimension(10, 20);
-        Dimension prefSize = new Dimension(0, 10);
-        Dimension maxSize = new Dimension(50, 70);
-        body.add(new Box.Filler(minSize, prefSize, maxSize));
         body.add(bAppID);
         body.add(bMgmt);
-        body.add(new Box.Filler(minSize, prefSize, maxSize));
+        body.add(errorLabel);
+        body.add(new Filler(dim7, dim7, dim7));
 
         frame.add(body);
         frame.pack();
@@ -61,11 +73,16 @@ public class AppIdChooser extends JFrame {
         frame.setVisible(true);
     }
 
-    public static void setAppId(String appId) {
-        applicationId = appId;
-    }
-
     public static String getAppId() {
         return applicationId;
+    }
+
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(new FlatDarculaLaf());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        SwingUtilities.invokeLater(AppIdChooser::new);
     }
 }

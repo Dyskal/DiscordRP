@@ -3,7 +3,6 @@ package dyskal;
 import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
-import com.formdev.flatlaf.FlatDarculaLaf;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +11,6 @@ import java.awt.event.WindowEvent;
 import java.util.Objects;
 
 public class DiscordRP {
-    private static final TomlManager tomlManager = new TomlManager();
 
     public DiscordRP() {
         JFrame frame = new JFrame();
@@ -141,14 +139,5 @@ public class DiscordRP {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(new FlatDarculaLaf());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        tomlManager.isAvailable();
     }
 }

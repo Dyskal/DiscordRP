@@ -1,20 +1,23 @@
 plugins {
-    id 'java'
+    id 'java'                                                   //https://gradle.org/install
     id "com.github.johnrengelman.shadow" version "6.1.0"        //https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
     id "edu.sc.seis.launch4j" version "2.4.9"                   //https://plugins.gradle.org/plugin/edu.sc.seis.launch4j
 }
 
 group 'dyskal.discordrp'
-version '1.6'
+version '1.7'
 
 repositories {
-    jcenter()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.formdev:flatlaf:0.46'                   //https://bintray.com/jformdesigner/flatlaf/flatlaf/_latestVersion
-    implementation 'club.minnced:java-discord-rpc:2.0.2'        //https://bintray.com/minndevelopment/maven/java-discord-rpc/_latestVersion
-    implementation 'com.electronwill.night-config:toml:3.6.3'   //https://bintray.com/bintray/jcenter/com.electronwill.night-config%3Atoml/_latestVersion
+    implementation 'com.formdev:flatlaf:1.0'                    //https://search.maven.org/artifact/com.formdev/flatlaf
+    implementation 'club.minnced:java-discord-rpc:2.0.2'        //https://jitpack.io/#MinnDevelopment/java-discord-rpc
+    // one day, switch to non deprecated library  https://github.com/JnCrMx/discord-game-sdk4j
+    implementation 'com.electronwill.night-config:toml:3.6.3'   //https://search.maven.org/artifact/com.electronwill.night-config/toml
+    implementation 'net.harawata:appdirs:1.2.1'                 //https://search.maven.org/artifact/net.harawata/appdirs
 }
 
 jar {
