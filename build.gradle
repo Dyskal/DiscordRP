@@ -1,11 +1,11 @@
 plugins {
     id 'java'                                                   //https://gradle.org/install
-    id "com.github.johnrengelman.shadow" version "6.1.0"        //https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
-    id "edu.sc.seis.launch4j" version "2.5.0"                   //https://plugins.gradle.org/plugin/edu.sc.seis.launch4j
+    id 'com.github.johnrengelman.shadow' version '7.0.0'        //https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
+    id 'edu.sc.seis.launch4j' version '2.5.0'                   //https://plugins.gradle.org/plugin/edu.sc.seis.launch4j
 }
 
 group 'dyskal.discordrp'
-version '1.7'
+version '1.8'
 
 repositories {
     mavenCentral()
