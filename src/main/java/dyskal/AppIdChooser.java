@@ -5,46 +5,58 @@ import com.formdev.flatlaf.FlatDarculaLaf;
 import javax.swing.*;
 import javax.swing.Box.Filler;
 import java.awt.*;
-import java.util.Objects;
+import java.util.ArrayList;
 
-public class AppIdChooser extends JFrame {
+import static java.util.Objects.requireNonNull;
+import static javax.swing.Box.createHorizontalBox;
+import static javax.swing.Box.createVerticalBox;
+import static javax.swing.SwingUtilities.invokeLater;
+import static javax.swing.UIManager.setLookAndFeel;
+
+class AppIdChooser extends JFrame {
     private String applicationId;
-    private final TomlManager tomlManager = new TomlManager();
 
-    public AppIdChooser() {
-        JFrame frame = new JFrame();
-        frame.setTitle("DiscordRP");
-        frame.setPreferredSize(new Dimension(250, 137));
-        frame.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("assets/icon.png"))).getImage());
-        frame.setResizable(false);
+    AppIdChooser() {
+        super("DiscordRP");
+        setPreferredSize(new Dimension(250, 137));
+        //TODO fix image
+//        ArrayList<Image> icons = new ArrayList<>();
+//        for (String size : new String[]{"","16x16", "20x20", "24x24", "30x30", "31x31", "32x32", "40x40", "48x48", "60x60", "64x64", "96x96", "120x120", "256x256"}) {
+//            icons.add(new ImageIcon(requireNonNull(getClass().getClassLoader().getResource("assets/icon"+size+".png"))).getImage());
+//        }
+//        setIconImages(icons);
+        setIconImage(new ImageIcon(requireNonNull(getClass().getClassLoader().getResource("assets/icon.png"))).getImage());
+        setResizable(false);
 
-        Box bAppID = Box.createVerticalBox();
+        TomlManager tomlManager = new TomlManager();
+
+        Box bAppID = createVerticalBox();
         JLabel applicationIdLabel = new JLabel("Enter or select your application id:");
         applicationIdLabel.setAlignmentX(CENTER_ALIGNMENT);
+
         JComboBox<String> applicationIdList = new JComboBox<>(tomlManager.getListAppIds().toArray(new String[0]));
         applicationIdList.setEditable(true);
         applicationIdList.setMaximumSize(new Dimension(215, 40));
 
-
-        Box bMgmt = Box.createHorizontalBox();
+        Box bMgmt = createHorizontalBox();
         JButton validation = new JButton("Validate");
         JLabel errorLabel = new JLabel();
         errorLabel.setAlignmentX(CENTER_ALIGNMENT);
-        validation.addActionListener(e -> {
+        validation.addActionListener(event -> {
             if (applicationIdList.getSelectedItem() != null && ((String) applicationIdList.getSelectedItem()).matches("^[0-9]+$")) {
                 applicationId = (String) applicationIdList.getSelectedItem();
                 if (!tomlManager.getListAppIds().contains(applicationId)) {
                     tomlManager.addAppId(applicationId);
                 }
-                frame.dispose();
-                SwingUtilities.invokeLater(DiscordRP::new);
+                dispose();
+                invokeLater(DiscordRP::new);
             } else {
                 errorLabel.setText("Application Id is invalid");
             }
         });
 
         JButton remove = new JButton("Remove");
-        remove.addActionListener(e -> {
+        remove.addActionListener(event -> {
             tomlManager.removeAppId((String) applicationIdList.getSelectedItem());
             applicationIdList.removeItem(applicationIdList.getSelectedItem());
         });
@@ -60,29 +72,29 @@ public class AppIdChooser extends JFrame {
         bMgmt.add(validation);
         bMgmt.add(remove);
 
-        Box body = Box.createVerticalBox();
+        Box body = createVerticalBox();
         body.add(bAppID);
         body.add(bMgmt);
         body.add(errorLabel);
         body.add(new Filler(dim7, dim7, dim7));
 
-        frame.add(body);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        add(body);
+        pack();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
-    public String getAppId() {
+    String getAppId() {
         return applicationId;
     }
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
         try {
-            UIManager.setLookAndFeel(new FlatDarculaLaf());
-        } catch (Exception ex) {
+            setLookAndFeel(new FlatDarculaLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
-        SwingUtilities.invokeLater(AppIdChooser::new);
+        invokeLater(AppIdChooser::new);
     }
 }
