@@ -34,11 +34,12 @@ class TomlManager {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void makeFile() throws IOException {
         if (!recreate && dir.exists() && file.exists()) {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            if (br.readLine() != null && br.readLine().isEmpty()) {
-                config.load();
-                listAppIds = config.get("appId");
-                return;
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                if (br.readLine() != null && br.readLine().isEmpty()) {
+                    config.load();
+                    listAppIds = config.get("appId");
+                    return;
+                }
             }
         }
         ArrayList<String> placeholder = new ArrayList<>();
