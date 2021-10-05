@@ -1,6 +1,6 @@
 plugins {
     id 'java'                                                   //https://gradle.org/install
-    id 'com.github.johnrengelman.shadow' version '7.0.0'        //https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
+    id 'com.github.johnrengelman.shadow' version '7.1.0'        //https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
     id 'edu.sc.seis.launch4j' version '2.5.1'                   //https://plugins.gradle.org/plugin/edu.sc.seis.launch4j
 }
 
