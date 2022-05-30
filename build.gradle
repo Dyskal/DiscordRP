@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.formdev:flatlaf:2.2'                    //https://search.maven.org/artifact/com.formdev/flatlaf
+    implementation 'com.formdev:flatlaf:2.3'                    //https://search.maven.org/artifact/com.formdev/flatlaf
     implementation 'club.minnced:java-discord-rpc:2.0.2'        //https://jitpack.io/#MinnDevelopment/java-discord-rpc
     // one day, switch to non deprecated library  https://github.com/JnCrMx/discord-game-sdk4j
     implementation 'com.electronwill.night-config:toml:3.6.5'   //https://search.maven.org/artifact/com.electronwill.night-config/toml
